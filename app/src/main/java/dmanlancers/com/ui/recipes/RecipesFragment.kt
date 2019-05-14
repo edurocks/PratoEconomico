@@ -6,16 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.launchdarkly.android.FeatureFlagChangeListener
-import com.launchdarkly.android.LDClient
-import com.launchdarkly.android.LDConfig
-import com.launchdarkly.android.LDUser
 import dagger.android.support.DaggerFragment
 import dmanlancers.com.R
+import dmanlancers.com.network.Resource
 import dmanlancers.com.di.di.viewmodels.ViewModelProviderFactory
-import kotlinx.android.synthetic.main.recipes_fragment.*
 import javax.inject.Inject
 
 class RecipesFragment : DaggerFragment() {
@@ -60,8 +55,21 @@ class RecipesFragment : DaggerFragment() {
 
        // LDClient.get().registerFeatureFlagListener("manage-mqtt-connection", listenerFlag)
         viewModel.getMenus().observe(this, Observer {menus ->
-            menus.forEach {
-                Log.e("nomes", it.name)
+            if (menus != null){
+                when(menus.status){
+
+                    Resource.Status.SUCCESS -> {
+                        menus.data?.forEach {
+                            Log.e("nomes", it.name)
+                        }
+                    }
+
+                    Resource.Status.ERROR -> {
+                        Log.e("erro", menus.message)
+                    }
+
+                    else -> Log.d("loading", "depois colocar o loading")
+                }
             }
         })
     }
