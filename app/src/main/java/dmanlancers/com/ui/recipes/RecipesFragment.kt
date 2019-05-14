@@ -23,8 +23,8 @@ class RecipesFragment : DaggerFragment() {
     @Inject
     lateinit var providerFactory: ViewModelProviderFactory
     private lateinit var viewModel: RecipesViewModel
-    private lateinit var ldClient : LDClient
-    private lateinit var listenerFlag : FeatureFlagChangeListener
+   // private lateinit var ldClient : LDClient
+   // private lateinit var listenerFlag : FeatureFlagChangeListener
 
     companion object {
         fun newInstance() = RecipesFragment()
@@ -39,7 +39,7 @@ class RecipesFragment : DaggerFragment() {
         viewModel = ViewModelProviders.of(this, providerFactory).get(RecipesViewModel::class.java)
 
 
-        val ldConfig = LDConfig.Builder()
+      /*  val ldConfig = LDConfig.Builder()
             .setMobileKey("mob-52a4c6d5-1b94-4ca3-8304-7267f4e19555")
             .build()
 
@@ -56,9 +56,9 @@ class RecipesFragment : DaggerFragment() {
             }else{
                 recipes.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
             }
-        }
+        }*/
 
-        LDClient.get().registerFeatureFlagListener("manage-mqtt-connection", listenerFlag)
+       // LDClient.get().registerFeatureFlagListener("manage-mqtt-connection", listenerFlag)
         viewModel.getMenus().observe(this, Observer {menus ->
             menus.forEach {
                 Log.e("nomes", it.name)
@@ -68,7 +68,7 @@ class RecipesFragment : DaggerFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        ldClient.close()
-        ldClient.unregisterFeatureFlagListener("manage-mqtt-connection", listenerFlag)
+       // ldClient.close()
+       // ldClient.unregisterFeatureFlagListener("manage-mqtt-connection", listenerFlag)
     }
 }

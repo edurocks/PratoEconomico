@@ -20,7 +20,6 @@ class RecipesViewModel @Inject constructor(): ViewModel() {
     private val ioScope = CoroutineScope(Dispatchers.IO + job)
 
     private fun fetchMenusCoroutines(){
-
         ioScope.launch {
             dataMenus.postValue(repository?.getMenusCoroutines())
         }
