@@ -15,3 +15,4 @@ data class Menus(val id : Int,
                  val created : String?,
                  @SerializedName("updated_at")
                  val updated : String?)
+
